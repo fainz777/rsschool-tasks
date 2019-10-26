@@ -1,10 +1,105 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Codejam Canvas</title>
-    <link rel="stylesheet" href="./style.css">
-  </head>
-  <body>
-    <script src="./index.js"></script>
-  </body>
+	<head>
+		<title>Codejam Canvas</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	</head>
+	<body>
+		 <div class="page_wrapper">
+			 <header class="page_header">
+					<div class="page_header__nav">
+						<span class="icon page_header__nav_icon"></span>
+					</div>
+
+					<h1 class="page_header__title">CodeJam - Pallete</h1>
+
+				 <div class="page_header__nav_right">
+					 <span class="icon page_header__nav_icon_aside"></span>
+				 </div>
+			 </header>
+			 <main class="page_main">
+				 <aside class="page_aside">
+					 <div class="tools_wrapper">
+						 <ul class="tools_group reset_list">
+							 <li class="tools_group__item">
+								 <span class="icon icon_bucket"></span>
+								 Pain bucket
+							 </li>
+							 <li class="tools_group__item">
+								 <span class="icon icon_picker"></span>
+								 Choose color
+							 </li>
+						 </ul>
+
+						 <ul class="tools_group reset_list">
+							 <li class="tools_group__item">
+								 <span class="icon icon_move"></span>
+								 Move
+							 </li>
+							 <li class="tools_group__item">
+								 <span class="icon icon_transform"></span>
+								 Transform
+							 </li>
+						 </ul>
+					 </div>
+
+					 <div class="tools_wrapper">
+						 <ul class="tools_group reset_list">
+							 <li class="tools_group__item">
+								 <span class="icon">
+									 <span class="icon_color" style="background-color: #C4C4C4;"></span>
+								 </span>
+								 Current color
+							 </li>
+							 <li class="tools_group__item">
+								 <span class="icon">
+									 <span class="icon_color">
+										 <span class="icon_color" style="background-color: #41F795;"></span>
+									 </span>
+								 </span>
+								 Prev color
+							 </li>
+						 </ul>
+
+						 <ul class="tools_group reset_list">
+							 <li class="tools_group__item">
+								 <span class="icon">
+									 <span class="icon_color">
+										 <span class="icon_color" style="background-color: #F74141;"></span>
+									 </span>
+								 </span>
+								 red
+							 </li>
+							 <li class="tools_group__item">
+								 <span class="icon">
+									 <span class="icon_color">
+										 <span class="icon_color" style="background-color: #41B6F7;"></span>
+									 </span>
+								 </span>
+								 blue
+							 </li>
+						 </ul>
+					 </div>
+
+					 <div class="tools_wrapper">
+						 <ul class="tools_group tools_group--canvas_switcher reset_list">
+							 <li class="tools_group__item">
+								 4 x 4
+							 </li>
+							 <li class="tools_group__item">
+								 32 x 32
+							 </li>
+							 <li class="tools_group__item">
+								 Image
+							 </li>
+						 </ul>
+					 </div>
+				 </aside>
+				 <div class="page_content">
+					 <canvas id="palette" class="palette"></canvas>
+				 </div>
+			 </main>
+		 </div>
+	</body>
 </html>

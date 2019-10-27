@@ -6,12 +6,7 @@ const config = {
 	pattern4x4: pattern4x4,
 	pattern32x32: pattern32x32,
 	image: image
-}
-
-class Canvas {
-	constructor() {}
-
-}
+};
 
 function getColor(color) {
 	if (typeof color === 'string') {
@@ -25,83 +20,92 @@ function getColor(color) {
 	return rgbaColor;
 }
 
-function clearCanvas(ctx) {
-	ctx.clearRect(0, 0, 512, 512);
-}
+class Canvas {
+	constructor(canvasId) {
+		const canvas = document.getElementById(canvasId);
+		this.width = canvas.width;
+		this.height = canvas.height;
+		this.ctx = palette.getContext('2d');
+	}
 
-function drawPattern(ctx, pattern) {
-	const w = 512 / pattern.length;
-	const h = 512 / pattern[0].length;
+	setEvents() {
+		const canvasChangeElems = document.querySelectorAll('.canvas_change');
 
-	pattern.forEach((line, i) => {
-		line.forEach((color, j) => {
-			color = getColor(color);
-			ctx.fillStyle = color;
+		canvasChangeElems.forEach(elem => {
+			const elemClasses = elem.classList;
+			const drawType = elem.dataset.type;
+			const _self = this;
 
-			ctx.fillRect(j * w, i * h, w, h);
+			if (elemClasses.contains('active')) {
+				this.drawCanvas(drawType);
+			}
+
+			elem.addEventListener('click', function() {
+				_self.manageCanvasDrawing(this, _self);
+			});
 		});
-	});
-}
-
-async function drawImage(ctx, imageSrc) {
-	const image = new  Image();
-	image.src = imageSrc;
-	image.onload = function() {
-		ctx.drawImage(this, 0, 0, 512, 512);
-	};
-}
-
-function drawCanvas(ctx, drawType) {
-	const draw = config[drawType];
-	if (drawType.includes('pattern')) {
-		drawPattern(ctx, draw);
-	} else if (drawType.includes('image')) {
-		drawImage(ctx, draw);
-	}
-}
-
-function manageCanvasDrawing() {
-
-	const elemClasses = this.classList;
-
-	if (elemClasses.contains('active')) {
-		return;
 	}
 
-	const activeElem = document.querySelector('.canvas_change.active');
-	activeElem.classList.remove('active');
+	clearCanvas() {
+		this.ctx.clearRect(0, 0, this.width, this.height);
+	}
 
-	elemClasses.add('active');
+	drawPattern(pattern) {
+		const w = this.width / pattern.length;
+		const h = this.height / pattern[0].length;
 
-	const drawType = this.dataset.type;
+		pattern.forEach((line, i) => {
+			line.forEach((color, j) => {
+				color = getColor(color);
+				this.ctx.fillStyle = color;
 
-	const palette = document.getElementById('palette');
-	const ctx = palette.getContext('2d');
-	clearCanvas(ctx);
-	drawCanvas(ctx, drawType);
+				this.ctx.fillRect(j * w, i * h, w, h);
+			});
+		});
+	}
+
+	async drawImage(imageSrc) {
+		const image = new  Image();
+		const _self = this;
+		image.src = imageSrc;
+		image.onload = function() {
+			_self.ctx.drawImage(this, 0, 0, 512, 512);
+		};
+	}
+
+	drawCanvas(drawType) {
+		const draw = config[drawType];
+		if (drawType.includes('pattern')) {
+			this.drawPattern(draw);
+		} else if (drawType.includes('image')) {
+			this.drawImage(draw);
+		}
+	}
+
+	manageCanvasDrawing(elem, self) {
+		const elemClasses = elem.classList;
+
+		if (elemClasses.contains('active')) {
+			return;
+		}
+
+		const activeElem = document.querySelector('.canvas_change.active');
+		activeElem.classList.remove('active');
+		elemClasses.add('active');
+		const drawType = elem.dataset.type;
+
+		self.clearCanvas();
+		self.drawCanvas(drawType);
+	}
+
+	init() {
+		this.setEvents();
+	}
 }
 
 function init() {
-	const palette = document.getElementById('palette');
-
-	const paletteCtx = palette.getContext('2d');
-	const canvasChangeElems = document.querySelectorAll('.canvas_change');
-
-	canvasChangeElems.forEach(elem => {
-		const elemClasses = elem.classList;
-		const drawType = elem.dataset.type;
-
-		if (elemClasses.contains('active')) {
-			drawCanvas(paletteCtx, drawType);
-		}
-
-		elem.addEventListener('click', manageCanvasDrawing);
-	});
-
-	//drawPattern(paletteCtx, pattern4x4);
-	//drawImage(paletteCtx, image);
-
-	//console.log(p);
+	let palette = new Canvas('palette');
+	palette.init()
 }
 
 document.addEventListener('DOMContentLoaded', init);

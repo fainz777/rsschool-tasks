@@ -1,0 +1,55 @@
+.keyboard {
+
+}
+
+.keyboard-row {
+    white-space: nowrap;
+    width: 882px;
+}
+
+.key-button {
+    border: 1px solid;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.key-button--backspace {
+    width: 120px;
+}
+
+.key-button--tab {
+    width: 85px;
+}
+
+.keyboard-row:nth-child(2) .key-button:last-child {
+    width: 85px;
+}
+
+.key-button--capsLock {
+    width: 105px;
+}
+
+.key-button--enter {
+    width: 123px;
+}
+
+.key-button--shift {
+    width: 120px;
+}
+
+.key-button--shift-right {
+    width: 108px;
+}
+
+.key-button--ctrl-left {
+    width: 85px;
+}
+
+.key-button--space {
+    width: 375px;
+}

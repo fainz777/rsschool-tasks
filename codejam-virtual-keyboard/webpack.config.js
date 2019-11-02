@@ -34,7 +34,7 @@ module.exports = {
     new ExtractTextPlugin({ filename: 'style.css' }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'Codejam Canvas',
+      title: 'Codejam Virtual Keyboard',
       template: './index.html',
     }),
   ],

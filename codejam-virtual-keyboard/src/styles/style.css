@@ -81,3 +81,15 @@ body {
 .key-button--space {
     width: 375px;
 }
+
+.key-button .case-on {
+    display: none;
+}
+
+.keyboard.case-on .case-off {
+    display: none;
+}
+
+.keyboard.case-on .case-on {
+    display: block;
+}

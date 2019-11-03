@@ -1,18 +1,23 @@
+.keyboard-wrapper {
+    width: 882px;
+    margin: 0 auto;
+    padding: 50px;
+}
+
 .keyboard-output {
     width: 100%;
-    height: 100px;
+    height: 150px;
+    margin: 0;
     display: block;
     margin-bottom: 10px;
-    width: 882px;
+
 }
 
 .keyboard {
-    width: 882px;
 }
 
 .keyboard-row {
     white-space: nowrap;
-    width: 100%;
 }
 
 .key-button {

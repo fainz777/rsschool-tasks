@@ -20,6 +20,11 @@ let btn;
     }
   
     createKeyboard() {
+      const keyboardWrapper = document.createElement('div');
+      keyboardWrapper.classList.add('keyboard-wrapper');
+  
+      const keyboardOutput = this.createKeyboardOutput();
+      
       const keyboard = document.createElement('div');
       keyboard.classList.add('keyboard');
   
@@ -27,8 +32,11 @@ let btn;
         const keyboardRow = this.createKeyboardRow(rowConfig);
         keyboard.appendChild(keyboardRow);
       });
+  
+      keyboardWrapper.appendChild(keyboardOutput);
+      keyboardWrapper.appendChild(keyboard);
       
-      return keyboard;
+      return keyboardWrapper;
     }
     
     createKeyboardOutput() {
@@ -43,14 +51,14 @@ let btn;
       keyboardRow.classList.add('keyboard-row');
   
       rowConfig.forEach(keyConfig => {
-        const keyButton = this.createKeyboardeyButton(keyConfig);
+        const keyButton = this.createKeyboardKeyButton(keyConfig);
         keyboardRow.appendChild(keyButton);
       });
       
       return keyboardRow;
     }
     
-    createKeyboardeyButton(keyConfig) {
+    createKeyboardKeyButton(keyConfig) {
       const keyButton = document.createElement('span');
       const className = 'key-button';
       let symbol;
@@ -96,9 +104,7 @@ let btn;
     }
     
     init() {
-      const keyboardOutput = this.createKeyboardOutput();
       const keyboard = this.createKeyboard();
-      document.querySelector(this.selector).appendChild(keyboardOutput);
       document.querySelector(this.selector).appendChild(keyboard);
       this.setEvents();
     }

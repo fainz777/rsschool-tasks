@@ -17,6 +17,7 @@ let btn;
     constructor(selector) {
       this.selector = selector;
       this.keysSet = {};
+      this.isShiftPressed = false;
     }
   
     createKeyboard() {
@@ -42,6 +43,7 @@ let btn;
     createKeyboardOutput() {
       const keyboardOutput = document.createElement('textarea');
       keyboardOutput.classList.add('keyboard-output');
+      this.output = keyboardOutput;
       
       return keyboardOutput;
     }
@@ -77,22 +79,52 @@ let btn;
         keyButton.classList.add(keyConfig.className);
       }
       
-      this.keysSet[keyConfig.code] = keyButton;
+      this.keysSet[keyConfig.code] = {
+        button: keyButton,
+        config: keyConfig
+      };
   
       return keyButton;
     }
     
+    outputValue(value) {
+      let currentValue = this.output.value;
+      currentValue += value;
+      this.output.value = currentValue;
+    }
+    
     keyboardKeyDownEvent(e) {
-      if (this.keysSet[e.code]) {
-        this.keysSet[e.code].classList.add('pressed');
+      console.log('e: ', e);
+      const key = this.keysSet[e.code];
+  
+      if (e.shiftKey) {
+        this.isShiftPressed = true;
+      }
+      
+      if (key) {
+        key.button.classList.add('pressed');
+        
+        const letterCase = this.isShiftPressed ? 1 : 0;
+        
+        if (key.config.type === 'default') {
+          this.outputValue(key.config.values[lang][letterCase]);
+        }
+        
+
       }
       
       e.preventDefault();
     }
     
     keyboardKeyUpEvent(e) {
-      if (this.keysSet[e.code]) {
-        this.keysSet[e.code].classList.remove('pressed');
+      const key = this.keysSet[e.code];
+  
+      if (e.shiftKey) {
+        this.isShiftPressed = false;
+      }
+      
+      if (key) {
+        key.button.classList.remove('pressed');
       }
       
       e.preventDefault();

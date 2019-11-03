@@ -452,8 +452,8 @@
       "type": "default",
       "code": "Space",
       "values": {
-        "en": ["&nbsp;", "&nbsp;"],
-        "ru": ["&nbsp;", "&nbsp;"]
+        "en": [" ", " "],
+        "ru": [" ", " "]
       },
       "className": "key-button--space"
     },
@@ -466,17 +466,17 @@
     {
       "type": "system",
       "code": "ArrowLeft",
-      "value": "left"
+      "value": "Left"
     },
     {
       "type": "system",
       "code": "ArrowDown",
-      "value": "dwn"
+      "value": "Dwn"
     },
     {
       "type": "system",
       "code": "ArrowRight",
-      "value": "right"
+      "value": "Right"
     },
     {
       "type": "system",

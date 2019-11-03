@@ -39,6 +39,7 @@ body {
     box-sizing: border-box;
 }
 
+.key-button:active,
 .key-button.pressed {
     background: #666;
     color: #fff;

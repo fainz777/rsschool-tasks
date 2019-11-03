@@ -28,6 +28,7 @@ let btn;
       
       const keyboard = document.createElement('div');
       keyboard.classList.add('keyboard');
+      this.keyboard = keyboard;
   
       keyboardConfig.forEach(rowConfig => {
         const keyboardRow = this.createKeyboardRow(rowConfig);
@@ -74,6 +75,7 @@ let btn;
       keyButton.innerText = symbol;
       
       keyButton.classList.add(className);
+      keyButton.dataset.code = keyConfig.code;
       
       if (keyConfig.className) {
         keyButton.classList.add(keyConfig.className);
@@ -103,14 +105,6 @@ let btn;
       
       if (key) {
         key.button.classList.add('pressed');
-        
-        const letterCase = this.isShiftPressed ? 1 : 0;
-        
-        if (key.config.type === 'default') {
-          this.outputValue(key.config.values[lang][letterCase]);
-        }
-        
-
       }
       
       e.preventDefault();
@@ -119,20 +113,59 @@ let btn;
     keyboardKeyUpEvent(e) {
       const key = this.keysSet[e.code];
   
-      if (e.shiftKey) {
+      if (!e.shiftKey) {
         this.isShiftPressed = false;
       }
       
       if (key) {
         key.button.classList.remove('pressed');
+        this.clickResolve(key);
       }
       
       e.preventDefault();
     }
     
+    clickResolve(key) {
+      console.log(key, this.isShiftPressed)
+      const letterCase = this.isShiftPressed ? 1 : 0;
+      
+      switch (key.config.type) {
+        case 'default':
+          this.outputValue(key.config.values[lang][letterCase]);
+          break;
+        
+        case 'system':
+          if (key.config.action) {
+            this[key.config.action]();
+          }
+          break;
+        
+        default:
+          break;
+      }
+    }
+    
+    buttonClickEvent(e) {
+      console.log(e);
+      debugger;
+      
+      if (e.target.classList.contains('key-button')) {
+        const code = e.target.dataset.code;
+        debugger;
+        this.clickResolve(this.keysSet[code]);
+      }
+    }
+    
     setEvents() {
       document.addEventListener('keydown', this.keyboardKeyDownEvent.bind(this));
       document.addEventListener('keyup', this.keyboardKeyUpEvent.bind(this));
+      this.keyboard.addEventListener('click', this.buttonClickEvent.bind(this));
+    }
+  
+    removePrevious() {
+      let currentValue = this.output.value;
+      currentValue = currentValue.slice(0, currentValue.length - 1);
+      this.output.value = currentValue;
     }
     
     init() {
@@ -146,46 +179,9 @@ let btn;
     const virtualKeyboard = new VirtualKeyboard('body');
     virtualKeyboard.init();
   };
-  /*const buildKeyboard = () => {
-    
-    let html = '<div class="keyboard">';
-    
-    keyboard.forEach((row) => {
-      html += '<div class="keyboard-row">';
-      
-      row.forEach((key) => {
-        let symbol;
-        let className = key.className || '';
-        
-        if (key.type === 'system') {
-          symbol = key.value;
-        } else {
-          symbol = key.values[lang][0];
-        }
-        
-        html += `<span class="key-button ${className.toLowerCase()}">${symbol}</span>`;
-      });
-      
-      html += '</div>';
-    });
-    
-    html += '</div>';
-    
-    document.querySelector('body').innerHTML = html;
-  };*/
   
   document.addEventListener('DOMContentLoaded', () => {
     initApp();
-    /*document.addEventListener('keyup', (e) => {
-      console.log(`code: ${e.code}, key: ${e.key}`);
-      btn.style.color = 'red';
-    });
-    buildKeyboard();
-    
-    btn = document.createElement('div');
-    btn.innerText = '1111';
-    document.querySelector('body').appendChild(btn);*/
-    
   });
 }());
 

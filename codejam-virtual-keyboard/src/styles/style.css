@@ -86,10 +86,15 @@ body {
     display: none;
 }
 
-.keyboard.case-on .case-off {
+.keyboard--case-on .case-off {
     display: none;
 }
 
-.keyboard.case-on .case-on {
+.keyboard--case-on .case-on {
     display: block;
+}
+
+
+.keyboard-layout--hidden {
+    display: none;
 }

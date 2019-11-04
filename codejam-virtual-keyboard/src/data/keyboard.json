@@ -342,7 +342,7 @@
       "code": "KeyZ",
       "values": {
         "en":  ["z", "Z"],
-        "ru":  ["ф", "Ф"]
+        "ru":  ["я", "Я"]
       }
     },
     {
@@ -350,7 +350,7 @@
       "code": "KeyX",
       "values": {
         "en":  ["x", "X"],
-        "ru":  ["ы", "Ы"]
+        "ru":  ["ч", "Ч"]
       }
     },
     {
@@ -446,7 +446,8 @@
     {
       "type": "system",
       "code": "AltLeft",
-      "value": "Alt"
+      "value": "Alt",
+      "action": "alt"
     },
     {
       "type": "default",
@@ -461,7 +462,8 @@
       "type": "system",
       "code": "AltRight",
       "value": "Alt",
-      "className": "key-button--alt"
+      "className": "key-button--alt",
+      "action": "alt"
     },
     {
       "type": "system",

@@ -73,22 +73,22 @@ import keyboardConfig from '../data/keyboard';
     createKeyboardKeyButton(keyConfig) {
       const keyButton = document.createElement('span');
       const className = 'key-button';
-      let symbol = '';
+      let buttonHtml = '';
 
       if (keyConfig.type === 'system') {
-        symbol = keyConfig.value;
+        buttonHtml = keyConfig.value;
       } else {
         for (let lang in keyConfig.values) {
-          symbol += `
+          buttonHtml += `
             <span class="keyboard-layout ${this.lang != lang ? this.layoutHiddenClass : ''}" data-lang="${lang}">
-              <span class="case-off">${keyConfig.values[lang][0]}</span>
-              <span class="case-on">${keyConfig.values[lang][1]}</span>
+              <span class="case-off">${keyConfig.placeholder || keyConfig.values[lang][0]}</span>
+              <span class="case-on">${keyConfig.placeholder || keyConfig.values[lang][1]}</span>
             </span>
           `;
         }
       }
 
-      keyButton.innerHTML = symbol;
+      keyButton.innerHTML = buttonHtml;
 
       keyButton.classList.add(className);
       keyButton.dataset.code = keyConfig.code;
@@ -130,8 +130,12 @@ import keyboardConfig from '../data/keyboard';
       const key = this.keysSet[e.code];
 
       if (!e.shiftKey) {
-        this.isShiftPressed = false;
-        this.keyboard.classList.remove(this.upperCaseOnClass);
+        // if (e.altKey) {
+        //   this.switchKeyboardLayout();
+        // } else {
+          this.isShiftPressed = false;
+          this.keyboard.classList.remove(this.upperCaseOnClass);
+        // }
       }
 
       if (key) {
@@ -159,6 +163,7 @@ import keyboardConfig from '../data/keyboard';
 
         case 'system':
           if (key.config.action) {
+            console.log('key.config.action: ', key.config.action)
             this[key.config.action](key);
           }
           break;
@@ -166,6 +171,8 @@ import keyboardConfig from '../data/keyboard';
         default:
           break;
       }
+
+      this.output.focus();
     }
 
     buttonClickEvent(e) {
@@ -182,10 +189,17 @@ import keyboardConfig from '../data/keyboard';
       this.keyboard.addEventListener('click', this.buttonClickEvent.bind(this), false);
     }
 
-    removePrevious() {
-      let currentValue = this.output.value;
-      currentValue = currentValue.slice(0, currentValue.length - 1);
-      this.output.value = currentValue;
+    backspace() {
+      let selectionStart = this.output.selectionStart;
+      const selectionEnd = this.output.selectionEnd;
+
+      if (selectionStart === selectionEnd) {
+        selectionStart--;
+      }
+      this.output.setRangeText('', selectionStart, selectionEnd);
+      // let currentValue = this.output.value;
+      // currentValue = currentValue.slice(0, currentValue.length - 1);
+      // this.output.value = currentValue;
     }
 
     shift(key) {
@@ -195,6 +209,10 @@ import keyboardConfig from '../data/keyboard';
         // this.isShiftPressed = true;
         this.keyboard.classList.add(this.upperCaseOnClass);
         key.button.classList.add(this.buttonPressedClass);
+
+        if (this.isAltPressed) {
+          this.switchKeyboardLayout();
+        }
       } else {
         // this.isShiftPressed = false;
         this.keyboard.classList.remove(this.upperCaseOnClass);
@@ -205,9 +223,14 @@ import keyboardConfig from '../data/keyboard';
     alt(key) {
       this.isAltPressed = !this.isAltPressed;
 
-      if (this.isAltPressed && this.isShiftPressed) {
+      if (this.isAltPressed) {
         key.button.classList.add(this.buttonPressedClass);
-        this.switchKeyboardLayout();
+
+        if (this.isShiftPressed) {
+          this.switchKeyboardLayout();
+        }
+      } else {
+        key.button.classList.remove(this.buttonPressedClass);
       }
     }
 
@@ -240,6 +263,7 @@ import keyboardConfig from '../data/keyboard';
 
       this.isShiftPressed = false;
       this.isAltPressed = false;
+      console.log('lang change');
     }
 
     init() {

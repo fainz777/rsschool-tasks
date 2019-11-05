@@ -109,16 +109,19 @@
       "code": "Backspace",
       "value": "Backspace",
       "className": "key-button--backspace",
-      "action": "removePrevious"
+      "action": "backspace"
     }
   ],
   [
     {
-      "type": "system",
+      "type": "default",
       "code": "Tab",
-      "value": "Tab",
+      "placeholder": "Tab",
       "className": "key-button--tab",
-      "action": "tabulate"
+      "values": {
+        "en": ["\t", "\t"],
+        "ru": ["\t", "\t"]
+      }
     },
     {
       "type": "default",
@@ -322,11 +325,14 @@
       }
     },
     {
-      "type": "system",
+      "type": "default",
       "code": "Enter",
-      "value": "Enter",
+      "placeholder": "Enter",
       "className": "key-button--enter",
-      "action": "enter"
+      "values": {
+        "en": ["\r\n", "\r\n"],
+        "ru": ["\r\n", "\r\n"]
+      }
     }
   ],
   [

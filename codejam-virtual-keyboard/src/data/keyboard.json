@@ -234,7 +234,7 @@
       "code": "CapsLock",
       "value": "CapsLock",
       "className": "key-button--capslock",
-      "action": "switchUpperCase"
+      "action": "capslock"
     },
     {
       "type": "default",

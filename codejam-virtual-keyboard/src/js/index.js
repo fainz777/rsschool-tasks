@@ -2,13 +2,7 @@ import '../styles/style.css';
 
 import keyboardConfig from '../data/keyboard';
 
-(function () {
-  //
-  // class LocalStorage {
-  //   constructor() {
-  //
-  //   }
-  // }
+const app = (function () {
 
   class VirtualKeyboard {
     constructor(selector) {
@@ -19,6 +13,7 @@ import keyboardConfig from '../data/keyboard';
       this.isAltPressed = false;
       this.langs = ['en', 'ru'];
       this.currentLayoutIndex = 0;
+      this.capsLockCode = 'CapsLock';
 
       this.buttonPressedClass = 'pressed';
       this.upperCaseOnClass = 'keyboard--case-on';
@@ -26,6 +21,12 @@ import keyboardConfig from '../data/keyboard';
     }
 
     get lang() {
+      const layoutIndex = localStorage.getItem('lang');
+
+      if (layoutIndex) {
+        this.currentLayoutIndex = layoutIndex;
+      }
+
       return this.langs[this.currentLayoutIndex];
     }
 
@@ -128,7 +129,7 @@ import keyboardConfig from '../data/keyboard';
 
     keyboardKeyUpEvent(e) {
       const key = this.keysSet[e.code];
-
+console.log('e: ', e);
       if (!e.shiftKey) {
         // if (e.altKey) {
         //   this.switchKeyboardLayout();
@@ -136,6 +137,10 @@ import keyboardConfig from '../data/keyboard';
         this.isShiftPressed = false;
         this.keyboard.classList.remove(this.upperCaseOnClass);
         // }
+      }
+
+      if (e.code === this.capsLockCode) {
+        this.capslock(key);
       }
 
       if (key) {
@@ -178,7 +183,7 @@ import keyboardConfig from '../data/keyboard';
     buttonClickEvent(e) {
       if (e.target.classList.contains('key-button')) {
         e.stopPropagation();
-        const code = e.target.dataset.code;
+        const { code } = e.target.dataset;
         this.clickResolve(this.keysSet[code]);
       }
     }
@@ -190,8 +195,8 @@ import keyboardConfig from '../data/keyboard';
     }
 
     backspace() {
-      let selectionStart = this.output.selectionStart;
-      const selectionEnd = this.output.selectionEnd;
+      let { selectionStart } = this.output;
+      const { selectionEnd } = this.output;
 
       if (selectionStart === selectionEnd) {
         selectionStart -= 1;
@@ -239,9 +244,17 @@ import keyboardConfig from '../data/keyboard';
     //   }
     // }
 
+    capslock(key) {
+      debugger;
+      this.isShiftPressed = !this.isShiftPressed;
+      key.button.classList.toggle(this.buttonPressedClass);
+    }
+
     switchKeyboardLayout() {
       this.currentLayoutIndex += 1;
       this.currentLayoutIndex = this.currentLayoutIndex >= this.langs.length ? 0 : this.currentLayoutIndex;
+
+      localStorage.setItem('lang', this.currentLayoutIndex);
 
       this.keyboard
         .querySelectorAll('.keyboard-layout')

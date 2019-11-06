@@ -1,0 +1,104 @@
+body {
+    font-family: sans-serif;
+}
+
+.keyboard-wrapper {
+    width: 882px;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+.keyboard-output {
+    width: calc(100% - 6px);
+    height: 150px;
+    margin: 3px 3px 10px;
+    display: block;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.keyboard {
+}
+
+.keyboard-row {
+    white-space: nowrap;
+}
+
+.key-button {
+    border: 2px outset;
+    display: inline-flex;
+    width: 52px;
+    height: 52px;
+    margin: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: .1s;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-family: sans-serif;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+.key-button:active,
+.key-button.pressed {
+    background: #666;
+    color: #fff;
+    border-style: inset;
+}
+
+.key-button--backspace {
+    width: 120px;
+}
+
+.key-button--tab {
+    width: 85px;
+}
+
+.keyboard-row:nth-child(2) .key-button:last-child {
+    width: 85px;
+}
+
+.key-button--capsLock {
+    width: 105px;
+}
+
+.key-button--enter {
+    width: 123px;
+}
+
+.key-button--shift {
+    width: 120px;
+}
+
+.key-button--shift-right {
+    width: 108px;
+}
+
+.key-button--ctrl-left {
+    width: 85px;
+}
+
+.key-button--space {
+    width: 375px;
+}
+
+.key-button .case-on {
+    display: none;
+}
+
+.keyboard--case-on .case-off {
+    display: none;
+}
+
+.keyboard--case-on .case-on {
+    display: block;
+}
+
+
+.keyboard-layout--hidden {
+    display: none;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdHlsZS5jc3MiLCJzb3VyY2VSb290IjoiIn0=*/

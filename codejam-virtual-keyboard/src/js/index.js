@@ -78,14 +78,14 @@ import keyboardConfig from '../data/keyboard';
       if (keyConfig.type === 'system') {
         buttonHtml = keyConfig.value;
       } else {
-        for (let lang in keyConfig.values) {
+        Object.keys(keyConfig.values).forEach((lang) => {
           buttonHtml += `
-            <span class="keyboard-layout ${this.lang != lang ? this.layoutHiddenClass : ''}" data-lang="${lang}">
+            <span class="keyboard-layout ${this.lang !== lang ? this.layoutHiddenClass : ''}" data-lang="${lang}">
               <span class="case-off">${keyConfig.placeholder || keyConfig.values[lang][0]}</span>
               <span class="case-on">${keyConfig.placeholder || keyConfig.values[lang][1]}</span>
             </span>
           `;
-        }
+        });
       }
 
       keyButton.innerHTML = buttonHtml;
@@ -133,8 +133,8 @@ import keyboardConfig from '../data/keyboard';
         // if (e.altKey) {
         //   this.switchKeyboardLayout();
         // } else {
-          this.isShiftPressed = false;
-          this.keyboard.classList.remove(this.upperCaseOnClass);
+        this.isShiftPressed = false;
+        this.keyboard.classList.remove(this.upperCaseOnClass);
         // }
       }
 
@@ -163,7 +163,7 @@ import keyboardConfig from '../data/keyboard';
 
         case 'system':
           if (key.config.action) {
-            console.log('key.config.action: ', key.config.action)
+            console.log('key.config.action: ', key.config.action);
             this[key.config.action](key);
           }
           break;
@@ -194,7 +194,7 @@ import keyboardConfig from '../data/keyboard';
       const selectionEnd = this.output.selectionEnd;
 
       if (selectionStart === selectionEnd) {
-        selectionStart--;
+        selectionStart -= 1;
       }
       this.output.setRangeText('', selectionStart, selectionEnd);
       // let currentValue = this.output.value;
@@ -234,18 +234,18 @@ import keyboardConfig from '../data/keyboard';
       }
     }
 
-    resolveCase(isUp, btn) {
-      if (isUp) {
-      }
-    }
+    // resolveCase(isUp, btn) {
+    //   if (isUp) {
+    //   }
+    // }
 
     switchKeyboardLayout() {
-      this.currentLayoutIndex++;
+      this.currentLayoutIndex += 1;
       this.currentLayoutIndex = this.currentLayoutIndex >= this.langs.length ? 0 : this.currentLayoutIndex;
 
       this.keyboard
         .querySelectorAll('.keyboard-layout')
-        .forEach(elem => {
+        .forEach((elem) => {
           if (elem.dataset.lang === this.lang) {
             elem.classList.remove(this.layoutHiddenClass);
           } else {
@@ -255,7 +255,7 @@ import keyboardConfig from '../data/keyboard';
 
       this.keyboard
         .querySelectorAll(`.${this.buttonPressedClass}`)
-        .forEach(button => {
+        .forEach((button) => {
           button.classList.remove(this.buttonPressedClass);
         });
 

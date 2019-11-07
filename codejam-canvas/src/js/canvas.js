@@ -1,28 +1,37 @@
+import Helpers from './helpers';
+
 import pattern4x4 from  '../data/4x4';
 import pattern32x32 from  '../data/32x32';
 import image from '../data/image.png';
 
 const config = {
-	pattern4x4: pattern4x4,
-	pattern32x32: pattern32x32,
-	image: image
-};
-
-function getColor(color) {
-	if (typeof color === 'string') {
-		return '#' + color;
+	drawTypes: {
+		pattern: 'pattern',
+		image: 'image'
+	},
+	drawImages: {
+		pattern4x4: pattern4x4,
+		pattern32x32: pattern32x32,
+		image: image
 	}
-
-	let rgbaColor = [...color];
-	rgbaColor[3] = rgbaColor.length === 4 ? (rgbaColor[3] / 255).toFixed(2) : 1;
-	rgbaColor = `rgba(${rgbaColor.join(',')})`;
-
-	return rgbaColor;
-}
+};
 
 class Canvas {
 	constructor(canvasId) {
+		if (!canvasId) {
+			Helpers.showMessage('Error: canvasId is not set.');
+
+			return;
+		}
+
 		const canvas = document.getElementById(canvasId);
+
+		if (!canvas) {
+			Helpers.showMessage(`Error: canvas element with id ${canvasId} was not found.`);
+
+			return;
+		}
+
 		this.width = canvas.width;
 		this.height = canvas.height;
 		this.ctx = palette.getContext('2d');
@@ -34,15 +43,12 @@ class Canvas {
 		canvasChangeElems.forEach(elem => {
 			const elemClasses = elem.classList;
 			const drawType = elem.dataset.type;
-			const _self = this;
 
 			if (elemClasses.contains('active')) {
 				this.drawCanvas(drawType);
 			}
 
-			elem.addEventListener('click', function() {
-				_self.manageCanvasDrawing(this, _self);
-			});
+			elem.addEventListener('click', this.manageCanvasDrawing.bind(this, elem));
 		});
 	}
 
@@ -56,7 +62,7 @@ class Canvas {
 
 		pattern.forEach((line, i) => {
 			line.forEach((color, j) => {
-				color = getColor(color);
+				color = Helpers.getColor(color);
 				this.ctx.fillStyle = color;
 
 				this.ctx.fillRect(j * w, i * h, w, h);
@@ -64,7 +70,7 @@ class Canvas {
 		});
 	}
 
-	async drawImage(imageSrc) {
+	drawImage(imageSrc) {
 		const image = new  Image();
 		const _self = this;
 		image.src = imageSrc;
@@ -74,15 +80,15 @@ class Canvas {
 	}
 
 	drawCanvas(drawType) {
-		const draw = config[drawType];
-		if (drawType.includes('pattern')) {
+		const draw = config.drawImages[drawType];
+		if (drawType.includes(config.drawTypes.pattern)) {
 			this.drawPattern(draw);
-		} else if (drawType.includes('image')) {
+		} else if (drawType.includes(config.drawTypes.image)) {
 			this.drawImage(draw);
 		}
 	}
 
-	manageCanvasDrawing(elem, self) {
+	manageCanvasDrawing(elem) {
 		const elemClasses = elem.classList;
 
 		if (elemClasses.contains('active')) {
@@ -94,8 +100,8 @@ class Canvas {
 		elemClasses.add('active');
 		const drawType = elem.dataset.type;
 
-		self.clearCanvas();
-		self.drawCanvas(drawType);
+		this.clearCanvas();
+		this.drawCanvas(drawType);
 	}
 
 	init() {

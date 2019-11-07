@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
@@ -20,13 +20,29 @@ module.exports = {
 						use: ['css-loader']
 					})
 			},
-		{
-			test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
-			loader: 'url-loader',
-			options: {
-				limit: 8192,
+			{
+				test: /\.svg$/,
+				use: [
+					{loader: 'file-loader'},
+					{
+						loader: 'svgo-loader',
+						options: {
+							plugins: [
+								{removeTitle: true},
+								{convertColors: {shorthex: false}},
+								{convertPathData: false}
+							]
+						}
+					}
+				]
 			},
-		}
+			{
+				test: /\.(png|jpe?g|gif|eot|ttf|woff|woff2)$/i,
+				loader: 'url-loader',
+				options: {
+					limit: 8192,
+				},
+			}
 		]
 	},
 	plugins: [

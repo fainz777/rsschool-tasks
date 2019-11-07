@@ -100,12 +100,28 @@ video[poster] {
 	border: 1px solid #000000;
 }
 
+.icon_color--current-color {
+	background-color: #C4C4C4;
+}
+
+.icon_color--prev_color {
+	background-color: #41F795;
+}
+
+.icon_color--foreground-color {
+	background-color: #F74141;
+}
+
+.icon_color--background-color {
+	background-color: #41B6F7;
+}
+
 .page_main {
 	display: flex;
 }
 
 .page_header {
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.24), 0px 0px 4px rgba(0, 0, 0, 0.12);
+	box-shadow: 0 4px 4px rgba(0, 0, 0, .24), 0 0 4px rgba(0, 0, 0, .12);
 	display: flex;
 	align-items: center;
 }

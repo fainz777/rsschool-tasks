@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Codejam Canvas</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link href="style.css" rel="stylesheet"></head>
+	<body>
+		 <div class="page_wrapper">
+			 <header class="page_header">
+					<div class="page_header__nav">
+						<span class="icon page_header__nav_icon"></span>
+					</div>
+
+					<h1 class="page_header__title">CodeJam - Pallete</h1>
+
+				 <div class="page_header__nav_right">
+					 <span class="icon page_header__nav_icon_aside"></span>
+				 </div>
+			 </header>
+			 <main class="page_main">
+				 <aside class="page_aside">
+					 <div class="tools_wrapper">
+						 <ul class="tools_group reset_list">
+							 <li class="tools_group__item" data-action="clearCanvas">
+								 <span class="icon">
+									 <span class="icon_blank"></span>
+								 </span>
+								 Clear canvas
+							 </li>
+						 </ul>
+						 <ul class="tools_group reset_list">
+							 <li class="tools_group__item" data-action="setTool" data-tool="paintBucket">
+								 <span class="icon icon_bucket"></span>
+								 Pain bucket
+							 </li>
+							 <li class="tools_group__item" data-action="setTool" data-tool="colorPicker">
+								 <span class="icon icon_picker"></span>
+								 Choose color
+							 </li>
+							 <li class="tools_group__item" data-action="setTool" data-tool="pencil">
+								 <span class="icon icon_pencil"></span>
+								 Pencil
+							 </li>
+						 </ul>
+
+						 <ul class="tools_group reset_list">
+							 <li class="tools_group__item disabled">
+								 <span class="icon icon_move"></span>
+								 Move
+							 </li>
+							 <li class="tools_group__item disabled">
+								 <span class="icon icon_transform"></span>
+								 Transform
+							 </li>
+						 </ul>
+					 </div>
+
+					 <div class="tools_wrapper">
+						 <ul class="tools_group reset_list">
+							 <li class="tools_group__item">
+								 <label class="tools_group__item_inner" for="current_color">
+									 <span class="icon">
+										 <span class="icon_color icon_color--current-color"></span>
+									 </span>
+									 Current color
+								 </label>
+
+								 <input id="current_color" class="color_picker" type="color" value="#c4c4c4">
+							 </li>
+							 <li class="tools_group__item item--color_change">
+								 <span class="icon">
+									 <span class="icon_color icon_color--prev_color"></span>
+								 </span>
+								 Prev color
+							 </li>
+						 </ul>
+
+						 <ul class="tools_group reset_list">
+							 <li class="tools_group__item item--color_change">
+								<span class="icon">
+									 <span class="icon_color icon_color--color1"></span>
+								</span>
+								red
+							 </li>
+							 <li class="tools_group__item item--color_change">
+								 <span class="icon">
+									 <span class="icon_color icon_color--color2"></span>
+								 </span>
+								 blue
+							 </li>
+						 </ul>
+					 </div>
+
+					 <div class="tools_wrapper">
+						 <ul class="tools_group tools_group--canvas_switcher reset_list">
+							 <li class="tools_group__item canvas_change active" data-pixels="4">
+								 4 x 4
+							 </li>
+							 <li class="tools_group__item canvas_change" data-pixels="8">
+								 8 x 8
+							 </li>
+							 <li class="tools_group__item canvas_change" data-pixels="16">
+								 16 x 16
+							 </li>
+							 <li class="tools_group__item canvas_change" data-pixels="32">
+								 32 x 32
+							 </li>
+							 <li class="tools_group__item canvas_change" data-pixels="64">
+								 64 x 64
+							 </li>
+							 <li class="tools_group__item canvas_change" data-pixels="128">
+								 128 x 128
+							 </li>
+							 <li class="tools_group__item canvas_change" data-pixels="256">
+								 256 x 256
+							 </li>
+							 <li class="tools_group__item canvas_change" data-pixels="512">
+								 512 x 512
+							 </li>
+						 </ul>
+					 </div>
+
+				 </aside>
+				 <div class="page_content">
+					 <canvas id="palette" class="palette" width="512" height="512"></canvas>
+				 </div>
+			 </main>
+		 </div>
+	<script type="text/javascript" src="main.js"></script></body>
+</html>
